@@ -34,8 +34,9 @@ func sqlQuery() {
 	}
 	defer db.Close()
 
-	var age = 27
-	rows, err := db.Query("select id, name, grade from tb_student where age = ?", age)
+	// var age = 27
+	// rows, err := db.Query("select id, name, grade from tb_student where age = ?", age)
+	rows, err := db.Query("select id, name, age, grade from tb_student")
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -46,7 +47,7 @@ func sqlQuery() {
 
 	for rows.Next() {
 		var each = student{}
-		var err = rows.Scan(&each.id, &each.name, &each.grade)
+		var err = rows.Scan(&each.id, &each.name, &each.age, &each.grade)
 
 		if err != nil {
 			fmt.Println(err.Error())
@@ -60,9 +61,9 @@ func sqlQuery() {
 		fmt.Println(err.Error())
 		return
 	}
-
+	fmt.Print("id	name	age		grade")
 	for _, each := range result {
-		fmt.Println(each.name)
+		fmt.Println(each.id, each.name, each.age, each.grade)
 	}
 
 }
